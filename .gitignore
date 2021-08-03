@@ -128,3 +128,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+db_password.txt
+db_user.txt
+secret_key.txt
