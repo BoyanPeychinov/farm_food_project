@@ -18,6 +18,13 @@ class FarmFoodUser(AbstractBaseUser, PermissionsMixin):
         auto_now_add=True,
     )
 
+    is_producer = models.BooleanField(
+        default=False,
+    )
+    is_consumer = models.BooleanField(
+        default=False,
+    )
+
     USERNAME_FIELD = 'email'
 
     objects = FarmFoodUserManager()
