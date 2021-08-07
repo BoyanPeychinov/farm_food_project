@@ -19,6 +19,7 @@ class SignUpView(CreateView):
 class SignInView(LoginView):
     template_name = 'auth/sign_in.html'
     form_class = SignInForm
+    success_url = reverse_lazy('index')
 
 
 def sign_out(request):

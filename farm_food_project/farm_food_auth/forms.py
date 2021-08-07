@@ -7,23 +7,7 @@ UserModel = get_user_model()
 
 
 class SignInForm(AuthenticationForm):
-    user = None
-
-    # password = forms.CharField(
-    #     widget=forms.PasswordInput(),
-    # )
-
-    def clean_password(self):
-        self.user = authenticate(
-            email=self.cleaned_data['email'],
-            password=self.cleaned_data['password'],
-        )
-
-        if not self.user:
-            raise ValidationError('The email and/or password are incorrect. Try again!')
-
-    def save(self):
-        return self.user
+    pass
 
 
 class SignUpForm(UserCreationForm):
