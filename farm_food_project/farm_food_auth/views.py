@@ -13,13 +13,21 @@ class SignUpView(CreateView):
     template_name = 'auth/sign_up.html'
     model = UserModel
     form_class = SignUpForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('sign in')
 
 
 class SignInView(LoginView):
     template_name = 'auth/sign_in.html'
     form_class = SignInForm
-    success_url = reverse_lazy('index')
+    # redirect_field_name = 'list products'
+    # success_url = reverse_lazy('list products')
+
+    def get_success_url(self):
+        url = self.get_redirect_url()
+        if url:
+            return url
+        else:
+            return reverse_lazy("list products")
 
 
 def sign_out(request):

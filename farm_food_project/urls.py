@@ -10,4 +10,5 @@ urlpatterns = [
     path('', index, name='index'),
     path('auth/', include('farm_food_project.farm_food_auth.urls')),
     path('profiles/', include('farm_food_project.profiles.urls')),
+    path('products/', include('farm_food_project.product.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

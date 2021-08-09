@@ -42,6 +42,8 @@ INSTALLED_APPS = [
 
     'farm_food_project.farm_food_auth',
     'farm_food_project.profiles',
+    'farm_food_project.product',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +152,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'farm_food_auth.FarmFoodUser'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -70,7 +70,7 @@ class ProducerProfileDetailsView(LoginRequiredMixin, DetailView):
 #
 #         return context
     model = ProducerUserProfile
-    template_name = 'profiles/producer_details.html'
+    template_name = 'profiles/producer_profile.html'
     context_object_name = 'producer'
 
     def get_context_data(self, **kwargs):

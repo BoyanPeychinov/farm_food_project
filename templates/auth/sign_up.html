@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form action="{% url 'sign up' %}" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button>Sign up</button>
-</form>
-</body>
-</html>
+{% extends 'shared/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <form class="aligned" method="post" action="{% url 'sign up' %}">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-primary" type="submit">Sign up</button>
+
+        </form>
+    </div>
+{#    <input name="next" type="hidden" value="{% url 'sign in' %}"/>#}
+{% endblock %}

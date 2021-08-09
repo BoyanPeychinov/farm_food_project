@@ -1,0 +1,13 @@
+{% extends 'shared/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <form class="aligned" action="{% url 'create product' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+{#            <a href="{% url 'index' %}" class="btn btn-primary">Create</a>#}
+            <button class="btn btn-primary mt-2" type="submit">Create</button>
+        </form>
+    </div>
+{% endblock %}

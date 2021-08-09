@@ -1,0 +1,21 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1 class='text-center'>All products</h1>
+        <div class="row">
+            {% for product in products %}
+                <div class="col-lg-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ product.product_image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">Product: {{ product.name }}</h5>
+                            <p class="card-text">Price: {{ product.price }} lv</p>
+                            <a href="{% url 'product details' product.id %}" class="btn btn-primary">See details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

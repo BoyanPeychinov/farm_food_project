@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
 
+
 UserModel = get_user_model()
 
 
@@ -29,10 +30,7 @@ class SignUpForm(UserCreationForm):
         model = UserModel
         fields = ('email', 'password1', 'password2', 'user_type')
 
-    def get_initial_for_field(self, field, field_name):
-        pass
-
-    def clean_user_type(self):
+    def clean(self):
         if self.cleaned_data['user_type'] == self.PRODUCER:
             self.instance.is_producer = True
         elif self.cleaned_data['user_type'] == self.CUSTOMER:
