@@ -1,4 +1,12 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
+    {% for producer in producers %}
+        <div class="container">
+            {{ producer.user_id }}
+            {{ producer.profile_image }}
+            {{ producer.name }}
+            <a href="{% url 'farm details' producer.user_id %}" class="btn btn-primary">Farm details</a>
+        </div>
+    {% endfor %}
 {% endblock %}

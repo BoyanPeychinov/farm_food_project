@@ -9,7 +9,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="{{ profile.profile_image }}" alt="Profile image" class="rounded-circle"
+                                <img src="{{ producer.profile_image }}" alt="Profile image" class="rounded-circle"
                                      width="150">
                                 <div class="mt-3">
                                     <h4>{{ producer }}</h4>
@@ -49,20 +49,20 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <a class="btn btn-info " target="__blank"
-                                           href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
-                                    </div>
-                                </div>
-                                <div class="w-50 m-auto">
-                                    <form action="{% url 'producer details' %}" method="post"
-                                          enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        {{ form }}
-                                        <button class="button btn-success">Update</button>
-                                    </form>
-                                </div>
+{#                                <div class="row">#}
+{#                                    <div class="col-sm-12">#}
+{#                                        <a class="btn btn-info " target="__blank"#}
+{#                                           href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="w-50 m-auto">#}
+{#                                    <form action="{% url 'producer details' %}" method="post"#}
+{#                                          enctype="multipart/form-data">#}
+{#                                        {% csrf_token %}#}
+{#                                        {{ form }}#}
+{#                                        <button class="button btn-success">Update</button>#}
+{#                                    </form>#}
+{#                                </div>#}
                             </div>
                         </div>
                     </div>

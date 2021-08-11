@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
 
+from farm_food_project.profiles.models import ProducerUserProfile
 
 UserModel = get_user_model()
 
@@ -19,6 +20,11 @@ class SignUpForm(UserCreationForm):
         (CUSTOMER, 'Customer'),
     )
 
+    name = forms.CharField(
+        required=True,
+        label='Enter your name or your company"s name',
+    )
+
     user_type = forms.ChoiceField(
         choices=TYPE_CHOICES,
         required=True,
@@ -28,7 +34,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = UserModel
-        fields = ('email', 'password1', 'password2', 'user_type')
+        fields = ('email', 'password1', 'password2', 'user_type', 'name')
 
     def clean(self):
         if self.cleaned_data['user_type'] == self.PRODUCER:
@@ -37,3 +43,15 @@ class SignUpForm(UserCreationForm):
             self.instance.is_consumer = True
         else:
             raise ValidationError('Choose one of the available roles!')
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.save()
+        user.refresh_from_db()
+        if user.is_producer:
+            user.produceruserprofile.name = self.cleaned_data['name']
+        else:
+            user.consumeruserprofile.name = self.cleaned_data['name']
+        user.save()
+
+        return user

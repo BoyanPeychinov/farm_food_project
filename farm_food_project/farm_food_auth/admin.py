@@ -12,7 +12,7 @@ class FarmFoodUserAdmin(UserAdmin):
     ordering = ('email',)
 
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'password', 'is_producer', 'is_consumer')}),
         ('Permissions', {
             'fields': ('is_staff', 'is_superuser', 'groups', 'user_permissions'),
         }),

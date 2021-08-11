@@ -6,6 +6,8 @@ from ..farm_food_auth.models import FarmFoodUser
 class ProducerUserProfile(models.Model):
     name = models.CharField(
         max_length=50,
+        null=True,
+        blank=True,
     )
 
     description = models.TextField()
@@ -24,8 +26,6 @@ class ProducerUserProfile(models.Model):
         blank=True,
     )
 
-    # products = None
-
     user = models.OneToOneField(
         FarmFoodUser,
         on_delete=models.CASCADE,
@@ -33,15 +33,11 @@ class ProducerUserProfile(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class ConsumerUserProfile(models.Model):
-    first_name = models.CharField(
-        max_length=50,
-    )
-
-    last_name = models.CharField(
+    name = models.CharField(
         max_length=50,
     )
 
@@ -62,7 +58,7 @@ class ConsumerUserProfile(models.Model):
     )
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f'{self.name}'
 
 
 from .signals import *

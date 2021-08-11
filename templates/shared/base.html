@@ -29,9 +29,9 @@
     {% else %}
         <li><a href="{% url 'create product' %}">Create</a></li>
         {% if request.user.is_producer %}
-            <li><a href="{% url 'producer detail' user.id %}">Profile</a></li>
+            <li><a href="{% url 'producer details' %}">Profile</a></li>
         {% else %}
-            {#            <li><a href="{% url 'producer detail' user.id %}">Profile</a></li>#}
+            <li><a href="{% url 'consumer detail' %}">Profile</a></li>
         {% endif %}
         <li><a href="{% url 'sign out' %}">Sign Out</a></li>
     {% endif %}
