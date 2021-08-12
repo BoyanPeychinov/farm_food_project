@@ -1,12 +1,25 @@
 {% extends 'shared/base.html' %}
+{% load static %}
 
 {% block content %}
-    {% for producer in producers %}
-        <div class="container">
-            {{ producer.user_id }}
-            {{ producer.profile_image }}
-            {{ producer.name }}
-            <a href="{% url 'farm details' producer.user_id %}" class="btn btn-primary">Farm details</a>
+    <div class="container">
+        <h1 class='text-center'>All farms</h1>
+        <div class="row">
+            {% for producer in producers %}
+                <div class="col-lg-4">
+                    <div class="card" style="width: 18rem;">
+                        {% if producer.profile_image %}
+                            <img src="{{ producer.profile_image.url }}" class="card-img-top" alt="{{ producer.name }}">
+                        {% else %}
+                            <img src="{% static 'images/no_image_available.png' %}" class="card-img-top" alt="{{ producer.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">Farm: {{ producer.name }}</h5>
+                            <a href="{% url 'farm details' producer.pk %}" class="btn btn-primary">See details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+    </div>
 {% endblock %}

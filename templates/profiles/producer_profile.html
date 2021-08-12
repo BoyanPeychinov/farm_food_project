@@ -1,4 +1,5 @@
 {% extends 'shared/base.html' %}
+{% load static %}
 
 {% block content %}
     <div class="container">
@@ -9,8 +10,13 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="{{ profile.profile_image }}" alt="Profile image" class="rounded-circle"
+                                {% if producer.profile_image %}
+                                <img src="{{ producer.profile_image.url }}" alt="Profile image" class="rounded-circle"
                                      width="150">
+                                {% else %}
+                                    <img src="{% static 'images/anonymous.jpg' %}" alt="Profile image" class="rounded-circle"
+                                     width="150">
+                                {% endif %}
                                 <div class="mt-3">
                                     <h4>{{ producer }}</h4>
                                     <p class="text-secondary mb-1">{{ producer.description }}</p>
@@ -19,52 +25,70 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Full Name</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        {{ producer }}
-                                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Full Name</h6>
                                 </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Phone</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        {{ producer.phone_number }}
-                                    </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{ producer }}
                                 </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Address</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        {{ producer.location }}
-                                    </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Phone</h6>
                                 </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <a class="btn btn-info " target="__blank"
-                                           href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
-                                    </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{ producer.phone_number }}
                                 </div>
-                                <div class="w-50 m-auto">
-                                    <form action="{% url 'producer details' %}" method="post"
-                                          enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        {{ form }}
-                                        <button class="button btn-success">Update</button>
-                                    </form>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Address</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{ producer.location }}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a class="btn btn-info " target="__blank"
+                                       href="{% url 'edit producer' request.user.id %}">Edit</a>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row gutters-sm">
+                    {% for product in products %}
+                        <div class="col-sm-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center text-center">
+                                        {% if product.product_image %}
+                                        <img src="{{ product.product_image.url }}" alt="Profile image"
+                                             class="rounded-circle"
+                                             width="150">
+                                        {% else %}
+                                            <img src="{% static 'images/no_image_available.png' %}" alt="Profile image"
+                                             class="rounded-circle"
+                                             width="150">
+                                        {% endif %}
+                                        <div class="mt-3">
+                                            <h4>{{ product }}</h4>
+                                            <p class="text-secondary mb-1">Available: {{ product.quantity }}</p>
+                                            <p class="text-muted font-size-sm">Price: {{ product.price }} lv</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}
                     </div>
                 </div>
             </div>

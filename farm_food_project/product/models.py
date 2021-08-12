@@ -46,3 +46,6 @@ class Product(models.Model):
         ProducerUserProfile,
         on_delete=models.CASCADE,
     )
+
+    def __str__(self):
+        return f"{self.name}"

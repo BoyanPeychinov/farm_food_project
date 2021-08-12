@@ -2,9 +2,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, FormView
+from django.views.generic import ListView, DetailView, FormView, UpdateView
 
-from farm_food_project.profiles.forms import ProducerProfileForm, ConsumerProfileForm
+from farm_food_project.product.models import Product
+from farm_food_project.profiles.forms import ProducerProfileForm, ConsumerProfileForm, EditProducerProfileForm, \
+    EditConsumerProfileForm
 from farm_food_project.profiles.models import ProducerUserProfile, ConsumerUserProfile
 
 
@@ -14,10 +16,11 @@ class ListProducersProfilesView(ListView):
     model = ProducerUserProfile
 
 
-class ProducerDetailsFromListView(DetailView):
+class ProducerDetailsFromListView(LoginRequiredMixin, DetailView):
     model = ProducerUserProfile
     template_name = 'profiles/producer_profile_from_list.html'
     context_object_name = 'producer'
+    login_url = 'sign in'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -29,30 +32,10 @@ class ProducerDetailsFromListView(DetailView):
 
         return context
 
-# @login_required
-# def producer_profile_details(request):
-#     profile = ProducerUserProfile.objects.get(pk=request.user.id)
-#     if request.method == 'POST':
-#         form = ProfileForm(
-#             request.POST,
-#             request.FILES,
-#             instance=profile,
-#         )
-#         if form.is_valid():
-#             form.save()
-#             return redirect('producer details')
-#     else:
-#         form = ProfileForm(instance=profile)
-#
-#     # user_pets = Pet.objects.filter(user_id=request.user.id)
-#
-#     context = {
-#         'form': form,
-#         # 'pets': user_pets,
-#         'profile': profile,
-#     }
-#
-#     return render(request, 'profiles/producer_details.html', context)
+    def get_permission_denied_message(self):
+        self.permission_denied_message = "You must log in to see farm's details"
+        return self.permission_denied_message
+
 
 class ProducerProfileDetailsView(LoginRequiredMixin, FormView):
     form_class = ProducerProfileForm
@@ -82,11 +65,18 @@ class ProducerProfileDetailsView(LoginRequiredMixin, FormView):
 
         is_user = self.object.user == self.request.user
 
-        # context['pets'] = Pet.objects.filter(user_id=self.request.user.id)
+        context['products'] = Product.objects.filter(id=self.request.user.id)
         context['is_user'] = is_user
         context['producer'] = self.object
 
         return context
+
+
+class EditProducerProfileView(LoginRequiredMixin, UpdateView):
+    model = ProducerUserProfile
+    form_class = EditProducerProfileForm
+    template_name = 'profiles/edit_producer.html'
+    success_url = reverse_lazy('producer details')
 
 
 class ConsumerProfileDetailsView(LoginRequiredMixin, FormView):
@@ -107,3 +97,17 @@ class ConsumerProfileDetailsView(LoginRequiredMixin, FormView):
         self.object.profile_image = form.cleaned_data['profile_image']
         self.object.save()
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['consumer'] = self.object
+
+        return context
+
+
+class EditConsumerProfileView(LoginRequiredMixin, UpdateView):
+    model = ConsumerUserProfile
+    form_class = EditConsumerProfileForm
+    template_name = 'profiles/edit_consumer.html'
+    success_url = reverse_lazy('list products')

@@ -3,10 +3,10 @@
 
 {% block content %}
     <div class="container">
-        <form class="aligned" action="{% url 'edit product' product.id %}" method="post" enctype="multipart/form-data">
+        <form class="aligned" action="{% url 'edit producer' request.user.id %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
-            <button class="btn btn-primary mt-2" type="submit">Edit</button>
+            <button class="btn btn-primary mt-2" type="submit">Confirm</button>
         </form>
     </div>
 {% endblock %}

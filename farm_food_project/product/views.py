@@ -17,17 +17,14 @@ class ProductDetailsView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'product/product_details.html'
     context_object_name = 'product'
+    login_url = 'sign in'
 
 
-class CreateProductView(CreateView):
+class CreateProductView(LoginRequiredMixin, CreateView):
     model = Product
     template_name = 'product/create_product.html'
     fields = ('product_type', 'name', 'quantity', 'price', 'product_image',)
     success_url = reverse_lazy('list products')
-
-    # def get_success_url(self):
-    #     product_id = self.kwargs['pk']
-    #     return reverse_lazy('product details', kwargs={'pk': product_id})
 
     def form_valid(self, form):
         product = form.save(commit=False)
