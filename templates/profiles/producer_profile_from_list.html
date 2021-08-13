@@ -11,11 +11,13 @@
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
                                 {% if producer.profile_image %}
-                                <img src="{{ producer.profile_image.url }}" alt="Profile image" class="rounded-circle"
-                                     width="150">
+                                    <img src="{{ producer.profile_image.url }}" alt="Profile image"
+                                         class="rounded-circle"
+                                         width="150">
                                 {% else %}
-                                    <img src="{% static 'images/no_image_available.png' %}" alt="Profile image" class="rounded-circle"
-                                     width="150">
+                                    <img src="{% static 'images/no_image_available.png' %}" alt="Profile image"
+                                         class="rounded-circle"
+                                         width="150">
                                 {% endif %}
                                 <div class="mt-3">
                                     <h4>{{ producer }}</h4>
@@ -63,4 +65,31 @@
         </div>
     </div>
 
+
+<div class="container">
+    <div class="row">
+        {% for product in products %}
+            <div class="col-lg-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="d-flex flex-column align-items-center text-center">
+                        {% if product.product_image %}
+                            <img src="{{ product.product_image.url }}" alt="Profile image"
+                                 class="rounded-circle"
+                                 width="150">
+                        {% else %}
+                            <img src="{% static 'images/no_image_available.png' %}" alt="Profile image"
+                             class="rounded-circle"
+                             width="150">
+                        {% endif %}
+                        <div class="mt-3">
+                            <h4>{{ product }}</h4>
+                            <p class="text-secondary mb-1">Available: {{ product.quantity }}</p>
+                            <p class="text-muted font-size-sm">Price: {{ product.price }} lv</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

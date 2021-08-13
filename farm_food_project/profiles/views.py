@@ -29,6 +29,7 @@ class ProducerDetailsFromListView(LoginRequiredMixin, DetailView):
         is_user = producer.user == self.request.user
 
         context['is_user'] = is_user
+        context['products'] = producer.product_set.filter(producer_profile_id=producer.pk)
 
         return context
 
@@ -42,6 +43,7 @@ class ProducerProfileDetailsView(LoginRequiredMixin, FormView):
     template_name = 'profiles/producer_profile.html'
     success_url = reverse_lazy('producer details')
     object = None
+    login_url = 'sign in'
 
     def get(self, request, *args, **kwargs):
         self.object = ProducerUserProfile.objects.get(pk=request.user.id)
@@ -65,7 +67,7 @@ class ProducerProfileDetailsView(LoginRequiredMixin, FormView):
 
         is_user = self.object.user == self.request.user
 
-        context['products'] = Product.objects.filter(id=self.request.user.id)
+        context['products'] = Product.objects.filter(producer_profile_id=self.object.pk)
         context['is_user'] = is_user
         context['producer'] = self.object
 
@@ -82,8 +84,9 @@ class EditProducerProfileView(LoginRequiredMixin, UpdateView):
 class ConsumerProfileDetailsView(LoginRequiredMixin, FormView):
     form_class = ConsumerProfileForm
     template_name = 'profiles/customer_profile.html'
-    success_url = reverse_lazy('consumer details')
+    success_url = reverse_lazy('consumer detail')
     object = None
+    login_url = 'sign in'
 
     def get(self, request, *args, **kwargs):
         self.object = ConsumerUserProfile.objects.get(pk=request.user.id)
@@ -95,6 +98,8 @@ class ConsumerProfileDetailsView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         self.object.profile_image = form.cleaned_data['profile_image']
+        self.object.name = form.cleaned_data['name']
+        self.object.phone_number = form.cleaned_data['phone_number']
         self.object.save()
         return super().form_valid(form)
 
@@ -110,4 +115,4 @@ class EditConsumerProfileView(LoginRequiredMixin, UpdateView):
     model = ConsumerUserProfile
     form_class = EditConsumerProfileForm
     template_name = 'profiles/edit_consumer.html'
-    success_url = reverse_lazy('list products')
+    success_url = reverse_lazy('consumer detail')
