@@ -23,9 +23,11 @@ class ProductDetailsView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         product = context['product']
 
-        is_owner = product.producer_profile == self.request.user.produceruserprofile
-
-        context['is_owner'] = is_owner
+        if self.request.user.is_producer:
+            is_owner = product.producer_profile == self.request.user.produceruserprofile
+            context['is_owner'] = is_owner
+        else:
+            context['is_owner'] = False
 
         return context
 
