@@ -19,6 +19,16 @@ class ProductDetailsView(LoginRequiredMixin, DetailView):
     context_object_name = 'product'
     login_url = 'sign in'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = context['product']
+
+        is_owner = product.producer_profile == self.request.user.produceruserprofile
+
+        context['is_owner'] = is_owner
+
+        return context
+
 
 class CreateProductView(LoginRequiredMixin, CreateView):
     model = Product

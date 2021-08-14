@@ -9,8 +9,8 @@ from farm_food_project.profiles.models import ConsumerUserProfile
 from tests.base.tests import ConsumerProfileTestCase
 
 
-class TestConsumerDetailsView(ConsumerProfileTestCase):
-    def test_postDetails_whenUserLoggedInWithoutImage_shouldChangeImage(self):
+class TestEditConsumerDetailsView(ConsumerProfileTestCase):
+    def test_postDetails_whenUserLoggedInWithoutProfileData_shouldAddData(self):
         path_to_image = join(settings.BASE_DIR, 'tests', 'media', 'dog.jpg')
 
         file_name = f"{random.randint(1, 100000)}-dog.jpg"
